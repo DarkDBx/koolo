@@ -33,10 +33,14 @@ inventory:
   beltColumns: [healing, healing, mana, rejuvenation] # 4 values, each represents the belt column type, allowed values: healing, mana, rejuvenation
 
 character:
-  class: sorceress # Allowed values: sorceress, lightning, hammerdin, foh, paladin (leveling only)
+  class: lightsorc # Allowed values: sorceress, lightning, hammerdin, foh, paladin (leveling only)
   useMerc: true
   stashToShared: false
   useTeleport: true # If set to false, bot will not use teleport skill and will walk to the destination
+  skipColdImmune: false
+  skipFireImmune: false
+  skipPoisonImmune: false
+  skipLightImmune: false
 
 game:
   minGoldPickupThreshold: 500000 # If total gold amount is less than this, bot will pick up and sell magic+ items

@@ -298,18 +298,6 @@ func MoveTo(toFunc func() (data.Position, bool)) error {
 				continue
 			}
 
-			monsterIsImmune := false
-			for _, resist := range ctx.Data.CharacterCfg.Runtime.ImmunityFilter {
-				if m.IsImmune(resist) {
-					monsterIsImmune = true
-					break
-				}
-			}
-
-			if monsterIsImmune {
-				continue
-			}
-
 			dist := ctx.PathFinder.DistanceFromMe(m.Position)
 			appended := false
 			if m.IsElite() && dist <= minDistanceForElites {
@@ -347,7 +335,24 @@ func MoveTo(toFunc func() (data.Position, bool)) error {
 
 				if !doorIsBlocking {
 					ctx.Char.KillMonsterSequence(func(d game.Data) (data.UnitID, bool) {
-						return closestMonster.UnitID, true
+						m, found := d.Monsters.FindByID(closestMonster.UnitID)
+
+						monsterIsImmune := false
+						for _, resist := range ctx.Data.CharacterCfg.Runtime.ImmunityFilter {
+							if m.IsImmune(resist) {
+								monsterIsImmune = true
+								break
+							}
+						}
+
+						if monsterIsImmune {
+							return 0, false
+						}
+
+						if found && m.Stats[stat.Life] > 0 {
+							return closestMonster.UnitID, true
+						}
+						return 0, false
 					})
 				}
 			}

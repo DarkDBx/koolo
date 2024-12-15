@@ -30,7 +30,7 @@ func ClearAreaAroundPosition(pos data.Position, radius int, filter data.MonsterF
 			}
 
 			if monsterIsImmune {
-				continue
+				return 0, false
 			}
 
 			distanceToTarget := pather.DistanceFromPoint(pos, m.Position)
