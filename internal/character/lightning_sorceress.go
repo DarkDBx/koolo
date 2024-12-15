@@ -58,7 +58,6 @@ func (s LightningSorceress) CheckKeyBindings() []skill.ID {
 
 func (s LightningSorceress) KillMonsterSequence(
 	monsterSelector func(d game.Data) (data.UnitID, bool),
-	skipOnImmunities []stat.Resist,
 ) error {
 	ctx := context.Get()
 	completedAttackLoops := 0
@@ -76,7 +75,7 @@ func (s LightningSorceress) KillMonsterSequence(
 			return nil
 		}
 
-		if !s.preBattleChecks(id, skipOnImmunities) {
+		if !s.preBattleChecks(id) {
 			return nil
 		}
 
@@ -159,18 +158,18 @@ func (s LightningSorceress) killBossWithStatic(bossID npc.ID, monsterType data.M
 		// Switch to Lightning once boss HP is low enough
 		return s.KillMonsterSequence(func(d game.Data) (data.UnitID, bool) {
 			return boss.UnitID, true
-		}, nil)
+		})
 	}
 }
 
-func (s LightningSorceress) killMonsterByName(id npc.ID, monsterType data.MonsterType, skipOnImmunities []stat.Resist) error {
+func (s LightningSorceress) killMonsterByName(id npc.ID, monsterType data.MonsterType) error {
 	return s.KillMonsterSequence(func(d game.Data) (data.UnitID, bool) {
 		if m, found := d.Monsters.FindOne(id, monsterType); found {
 			return m.UnitID, true
 		}
 
 		return 0, false
-	}, skipOnImmunities)
+	})
 }
 
 func (s LightningSorceress) BuffSkills() []skill.ID {
@@ -241,11 +240,11 @@ func (s LightningSorceress) KillBaal() error {
 }
 
 func (s LightningSorceress) KillCountess() error {
-	return s.killMonsterByName(npc.DarkStalker, data.MonsterTypeSuperUnique, nil)
+	return s.killMonsterByName(npc.DarkStalker, data.MonsterTypeSuperUnique)
 }
 
 func (s LightningSorceress) KillSummoner() error {
-	return s.killMonsterByName(npc.Summoner, data.MonsterTypeUnique, nil)
+	return s.killMonsterByName(npc.Summoner, data.MonsterTypeUnique)
 }
 
 func (s LightningSorceress) KillIzual() error {
@@ -260,13 +259,13 @@ func (s LightningSorceress) KillCouncil() error {
 			}
 		}
 		return 0, false
-	}, nil)
+	})
 }
 
 func (s LightningSorceress) KillPindle() error {
-	return s.killMonsterByName(npc.DefiledWarrior, data.MonsterTypeSuperUnique, s.CharacterCfg.Game.Pindleskin.SkipOnImmunities)
+	return s.killMonsterByName(npc.DefiledWarrior, data.MonsterTypeSuperUnique)
 }
 
 func (s LightningSorceress) KillNihlathak() error {
-	return s.killMonsterByName(npc.Nihlathak, data.MonsterTypeSuperUnique, nil)
+	return s.killMonsterByName(npc.Nihlathak, data.MonsterTypeSuperUnique)
 }
