@@ -16,9 +16,9 @@ import (
 const (
 	NovaMinDistance      = 6
 	NovaMaxDistance      = 9
-	StaticMinDistance    = 13
-	StaticMaxDistance    = 22
-	NovaMaxAttacksLoop   = 10
+	StaticMinDistance    = 1
+	StaticMaxDistance    = 3
+	NovaMaxAttacksLoop   = 40
 	StaticFieldThreshold = 67 // Cast Static Field if monster HP is above this percentage
 )
 
