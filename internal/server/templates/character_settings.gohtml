@@ -414,12 +414,12 @@
                 <input type="checkbox" name="gamblingEnabled" {{ if .Config.Gambling.Enabled }}checked{{ end }}/>
                 Enabled
             </label>
+
             <h3>Cube Recipes</h3>
             <label>
                 <input type="checkbox" style="padding-right: 30px" name="enableCubeRecipes" {{ if .Config.CubeRecipes.Enabled }}checked{{ end }}/>
                 Enable the bot to automatically cube item recipes.
-            </label><br>
-
+            </label><br />
             <div class="recipe-grid">
                 {{ range $index, $recipe := .RecipeList }}
                     <label>
@@ -428,6 +428,21 @@
                     </label>
                 {{ end }}
             </div>
+
+            <h3>Socket Recipes</h3>
+            <label>
+                <input type="checkbox" style="padding-right: 30px" name="enableSocketing" {{ if .Config.SocketRecipes.EnableSocketing  }}checked{{ end }}/>
+                Enable the bot to automatically socket item runewords.
+            </label><br />
+            <div class="recipe-grid">
+                {{ range $index, $recipe := .SocketRecipeList }}
+                    <label>
+                        <input type="checkbox" name="enabledSocketRecipes" value="{{ $recipe }}" {{ if contains $.Config.SocketRecipes.EnabledSocketRecipes $recipe }}checked{{ end }}>
+                        {{ $recipe }}
+                    </label>
+                {{ end }}
+            </div> 
+
             <h3>Leader mode</h3>
             <label>
                 <input type="checkbox" name="companionLeader" {{ if .Config.Companion.Leader }}checked{{ end }}/>

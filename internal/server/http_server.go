@@ -933,6 +933,12 @@ func (s *HttpServer) characterSettings(w http.ResponseWriter, r *http.Request) {
 		cfg.CubeRecipes.Enabled = r.Form.Has("enableCubeRecipes")
 		enabledRecipes := r.Form["enabledRecipes"]
 		cfg.CubeRecipes.EnabledRecipes = enabledRecipes
+
+		// Socket Recipes
+		cfg.SocketRecipes.EnableSocketing = r.Form.Has("enableSocketing")
+		enabledSocketRecipes := r.Form["enabledSocketRecipes"]
+		cfg.SocketRecipes.EnabledSocketRecipes = enabledSocketRecipes
+
 		// Companion
 
 		// Companion config
@@ -988,12 +994,13 @@ func (s *HttpServer) characterSettings(w http.ResponseWriter, r *http.Request) {
 	dayNames := []string{"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"}
 
 	s.templates.ExecuteTemplate(w, "character_settings.gohtml", CharacterSettings{
-		Supervisor:   supervisor,
-		Config:       cfg,
-		DayNames:     dayNames,
-		EnabledRuns:  enabledRuns,
-		DisabledRuns: disabledRuns,
-		AvailableTZs: availableTZs,
-		RecipeList:   config.AvailableRecipes,
+		Supervisor:       supervisor,
+		Config:           cfg,
+		DayNames:         dayNames,
+		EnabledRuns:      enabledRuns,
+		DisabledRuns:     disabledRuns,
+		AvailableTZs:     availableTZs,
+		RecipeList:       config.AvailableRecipes,
+		SocketRecipeList: config.AvailableSocketRecipes,
 	})
 }

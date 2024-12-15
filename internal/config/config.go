@@ -228,6 +228,10 @@ type CharacterCfg struct {
 		Enabled        bool     `yaml:"enabled"`
 		EnabledRecipes []string `yaml:"enabledRecipes"`
 	} `yaml:"cubing"`
+	SocketRecipes struct {
+		EnableSocketing      bool     `yaml:"enableSocketing"`
+		EnabledSocketRecipes []string `yaml:"enabledSocketRecipes"`
+	} `yaml:"socketing"`
 	BackToTown struct {
 		NoHpPotions     bool `yaml:"noHpPotions"`
 		NoMpPotions     bool `yaml:"noMpPotions"`
